@@ -12,11 +12,15 @@ class WallServiceTest {
             fromId = 1,
             createdBy = 1,
             date = 123456789,
+            replyOwnerID = 1,
             text = "Test post",
-            comments = CommentObject(0, true, true),
-            likes = LikeObject(0, false, true, true),
+            comments = CommentObject(count = 0, canPost = true, groupsCanPost = true),
+            copyright = CopyrightObject(0, "link", "CR", "type"),
+            likes = LikeObject(count = 0, userLikes = false, canLike = true, canPublish = true),
             reposts = RepostObject(0, false),
-            views = ViewsObject(0)
+            views = ViewsObject(0),
+            postType = "Type",
+            attachments = emptyArray(),
         )
 
         val addedPost = WallService.add(post)
@@ -32,11 +36,15 @@ class WallServiceTest {
             fromId = 1,
             createdBy = 1,
             date = 123456789,
+            replyOwnerID = 1,
             text = "Existing post",
-            comments = CommentObject(0, true, true),
-            likes = LikeObject(0, false, true, true),
+            comments = CommentObject(count = 0, canPost = true, groupsCanPost = true),
+            copyright = CopyrightObject(0, "link", "CR", "type"),
+            likes = LikeObject(count = 0, userLikes = false, canLike = true, canPublish = true),
             reposts = RepostObject(0, false),
-            views = ViewsObject(0)
+            views = ViewsObject(0),
+            postType = "Type",
+            attachments = emptyArray()
         )
         WallService.add(existingPost)
 
@@ -54,11 +62,15 @@ class WallServiceTest {
             fromId = 1,
             createdBy = 1,
             date = 123456789,
+            replyOwnerID = 1,
             text = "Nonexistent post",
-            comments = CommentObject(0, true, true),
-            likes = LikeObject(0, false, true, true),
+            comments = CommentObject(0, canPost = true, groupsCanPost = true),
+            copyright = CopyrightObject(0, "link", "CR", "type"),
+            likes = LikeObject(0, false, canLike = true, canPublish = true),
             reposts = RepostObject(0, false),
-            views = ViewsObject(0)
+            views = ViewsObject(0),
+            postType = "Type",
+            attachments = emptyArray()
         )
 
         val isUpdated = WallService.update(nonExistentPost)
