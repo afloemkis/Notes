@@ -167,12 +167,12 @@ data class Link(
 )
 
 // Классы-наследники Attachment
-data class PhotoAttachment(override val type: String, val photo: Photo) : Attachment
+data class PhotoAttachment(override val type: String = "photo", val photo: Photo) : Attachment
 
-data class VideoAttachment(override val type: String, val video: Video) : Attachment
+data class VideoAttachment(override val type: String = "video", val video: Video) : Attachment
 
-data class AudioAttachment(override val type: String, val audio: Audio) : Attachment
+data class AudioAttachment(override val type: String = "audio", val audio: Audio) : Attachment
 
-data class FileAttachment(override val type: String, val file: File) : Attachment
+data class FileAttachment(override val type: String = "file", val file: File) : Attachment
 
-data class LinkAttachment(override val type: String, val link: Link) : Attachment
+data class LinkAttachment(override val type: String = "link", val link: Link) : Attachment
