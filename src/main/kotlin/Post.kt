@@ -10,7 +10,7 @@ data class Post(
     val replyPostID: Int? = null,
     val friendsOnly: Boolean = false,
     val text: String,
-    val comments: CommentObject,
+    val comments: CommentObject? = null,
     val copyright: CopyrightObject, //the source of material
     val likes: LikeObject,
     val reposts: RepostObject,
@@ -34,7 +34,7 @@ data class CommentObject(
     val canPost: Boolean = false,
     val groupsCanPost: Boolean = false,
     val canClose: Boolean = false,
-    val canOpen: Boolean = false,
+    val canOpen: Boolean = false
 )
 
 data class CopyrightObject(

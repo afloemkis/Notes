@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="WallServiceTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2023-07-16T17:37:54" hostname="ARTEM_NOTEBOOK" time="0.49">
+<testsuite name="WallServiceTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2023-07-22T14:04:12" hostname="ARTEM_NOTEBOOK" time="0.454">
   <properties/>
-  <testcase name="addPost_IdIsNotZero" classname="WallServiceTest" time="0.451"/>
-  <testcase name="updatePost_NonexistentId_ReturnsFalse" classname="WallServiceTest" time="0.001"/>
-  <testcase name="updatePost_ExistingId_ReturnsTrue" classname="WallServiceTest" time="0.036"/>
+  <testcase name="addComment_throwException" classname="WallServiceTest" time="0.029"/>
+  <testcase name="addPost_IdIsNotZero" classname="WallServiceTest" time="0.388"/>
+  <testcase name="updatePost_NonexistentId_ReturnsFalse" classname="WallServiceTest" time="0.0"/>
+  <testcase name="addComment_existingPost" classname="WallServiceTest" time="0.021"/>
+  <testcase name="updatePost_ExistingId_ReturnsTrue" classname="WallServiceTest" time="0.014"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
