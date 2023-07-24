@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="WallServiceTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2023-07-22T14:04:12" hostname="ARTEM_NOTEBOOK" time="0.454">
+<testsuite name="WallServiceTest" tests="17" skipped="0" failures="0" errors="0" timestamp="2023-07-24T11:31:21" hostname="ARTEM_NOTEBOOK" time="3.697">
   <properties/>
-  <testcase name="addComment_throwException" classname="WallServiceTest" time="0.029"/>
-  <testcase name="addPost_IdIsNotZero" classname="WallServiceTest" time="0.388"/>
-  <testcase name="updatePost_NonexistentId_ReturnsFalse" classname="WallServiceTest" time="0.0"/>
-  <testcase name="addComment_existingPost" classname="WallServiceTest" time="0.021"/>
-  <testcase name="updatePost_ExistingId_ReturnsTrue" classname="WallServiceTest" time="0.014"/>
+  <testcase name="addNote_addFirstNote" classname="WallServiceTest" time="0.148"/>
+  <testcase name="testGetNotes" classname="WallServiceTest" time="0.444"/>
+  <testcase name="testGetNoteByID" classname="WallServiceTest" time="0.0"/>
+  <testcase name="editNote_edited" classname="WallServiceTest" time="0.001"/>
+  <testcase name="restoreComment_ThrowException" classname="WallServiceTest" time="0.001"/>
+  <testcase name="editComment_ThrowNotFoundException" classname="WallServiceTest" time="0.001"/>
+  <testcase name="testRestoreComment" classname="WallServiceTest" time="0.084"/>
+  <testcase name="editComment_ThrowDeletedException" classname="WallServiceTest" time="0.018"/>
+  <testcase name="deleteNote_throwException" classname="WallServiceTest" time="1.347"/>
+  <testcase name="editComment_edited" classname="WallServiceTest" time="0.0"/>
+  <testcase name="deleteComment_ThrowException" classname="WallServiceTest" time="0.0"/>
+  <testcase name="editNote_ThrowException" classname="WallServiceTest" time="0.0"/>
+  <testcase name="createComment_addFirstComment" classname="WallServiceTest" time="0.0"/>
+  <testcase name="testGetComments" classname="WallServiceTest" time="0.001"/>
+  <testcase name="deleteComment_existingComment" classname="WallServiceTest" time="0.0"/>
+  <testcase name="deleteNote_delete" classname="WallServiceTest" time="1.638"/>
+  <testcase name="GetNoteByID_ThrowException" classname="WallServiceTest" time="0.005"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

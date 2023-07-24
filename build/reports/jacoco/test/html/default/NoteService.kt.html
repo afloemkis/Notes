@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NoteService.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PostClass4_4_1</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">NoteService.kt</span></div><h1>NoteService.kt</h1><pre class="source lang-java linenums">object NoteService {
+
+<span class="fc" id="L3">    private var notes = mutableListOf&lt;Note&gt;() //РёСЃРїРѕР»СЊР·СѓСЋ РїРѕРґС…РѕРґ</span>
+
+    // СЃ С…СЂР°РЅРµРЅРёРµРј Р·Р°РјРµС‚РѕРє РІ СЃРїРёСЃРєРµ MutableList, Рё С„Р»Р°Рі deleted РїРѕРјРѕРіР°РµС‚ РѕР±РѕР·РЅР°С‡РёС‚СЊ СѓРґР°Р»РµРЅРЅС‹Рµ Р·Р°РјРµС‚РєРё
+<span class="fc" id="L6">    private var comments = mutableListOf&lt;Comment&gt;()</span>
+
+
+    //РЎРѕР·РґР°РµС‚ РЅРѕРІСѓСЋ Р·Р°РјРµС‚РєСѓ Сѓ С‚РµРєСѓС‰РµРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
+<span class="fc" id="L10">    fun addNote(</span>
+        title: String, //Р—Р°РіРѕР»РѕРІРѕРє Р·Р°РјРµС‚РєРё
+        text: String, //РўРµРєСЃС‚ Р·Р°РјРµС‚РєРё
+<span class="fc" id="L13">        privacy: Int = 0, //РЈСЂРѕРІРµРЅСЊ РґРѕСЃС‚СѓРїР° Рє Р·Р°РјРµС‚РєРµ Р’РѕР·РјРѕР¶РЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ:</span>
+        // 0 вЂ” РІСЃРµ РїРѕР»СЊР·РѕРІР°С‚РµР»Рё,
+        // 1 вЂ” С‚РѕР»СЊРєРѕ РґСЂСѓР·СЊСЏ,
+        // 2 вЂ” РґСЂСѓР·СЊСЏ Рё РґСЂСѓР·СЊСЏ РґСЂСѓР·РµР№,
+        // 3 вЂ” С‚РѕР»СЊРєРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ.
+<span class="fc" id="L18">        commentPrivacy: Int = 0, //РЈСЂРѕРІРµРЅСЊ РґРѕСЃС‚СѓРїР° Рє РєРѕРјРјРµРЅС‚РёСЂРѕРІР°РЅРёСЋ Р·Р°РјРµС‚РєРё. Р’РѕР·РјРѕР¶РЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ:</span>
+        // 0 вЂ” РІСЃРµ РїРѕР»СЊР·РѕРІР°С‚РµР»Рё,
+        // 1 вЂ” С‚РѕР»СЊРєРѕ РґСЂСѓР·СЊСЏ,
+        // 2 вЂ” РґСЂСѓР·СЊСЏ Рё РґСЂСѓР·СЊСЏ РґСЂСѓР·РµР№,
+        // 3 вЂ” С‚РѕР»СЊРєРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ.
+<span class="fc" id="L23">        privacyView: String = &quot;All&quot;, //РќР°СЃС‚СЂРѕР№РєРё РїСЂРёРІР°С‚РЅРѕСЃС‚Рё РїСЂРѕСЃРјРѕС‚СЂР° Р·Р°РјРµС‚РєРё</span>
+<span class="fc" id="L24">        privacyComment: String = &quot;All&quot;, //РќР°СЃС‚СЂРѕР№РєРё РїСЂРёРІР°С‚РЅРѕСЃС‚Рё РєРѕРјРјРµРЅС‚РёСЂРѕРІР°РЅРёСЏ Р·Р°РјРµС‚РєРё</span>
+    ): Int {
+<span class="fc" id="L26">        val newNote = Note(</span>
+<span class="fc" id="L27">            id = getNextId(),</span>
+<span class="fc" id="L28">            title = title,</span>
+<span class="fc" id="L29">            text = text,</span>
+<span class="fc" id="L30">            date = System.currentTimeMillis().toInt(),</span>
+<span class="fc" id="L31">            privacy = privacy,</span>
+<span class="fc" id="L32">            commentPrivacy = commentPrivacy,</span>
+<span class="fc" id="L33">            privacyView = privacyView,</span>
+<span class="fc" id="L34">            privacyComment = privacyComment</span>
+        )
+<span class="fc" id="L36">        notes.add(newNote)</span>
+<span class="fc" id="L37">        return newNote.id</span>
+    }
+
+    //РЎРѕР·РґР°РµС‚ РЅРѕРІС‹Р№ РєРѕРјРјРµРЅС‚Р°СЂРёР№
+<span class="nc" id="L41">    fun createComment(</span>
+        noteId: Int, //Р�РґРµРЅС‚РёС„РёРєР°С‚РѕСЂ Р·Р°РјРµС‚РєРё
+<span class="nc" id="L43">        replyTo: Int? = null, //Р�РґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ, РѕС‚РІРµС‚РѕРј РЅР° РєРѕРјРјРµРЅС‚Р°СЂРёР№ РєРѕС‚РѕСЂРѕРіРѕ СЏРІР»СЏРµС‚СЃСЏ РґРѕР±Р°РІР»СЏРµРјС‹Р№ РєРѕРјРјРµРЅС‚Р°СЂРёР№</span>
+        // (РЅРµ РїРµСЂРµРґР°С‘С‚СЃСЏ, РµСЃР»Рё РєРѕРјРјРµРЅС‚Р°СЂРёР№ РЅРµ СЏРІР»СЏРµС‚СЃСЏ РѕС‚РІРµС‚РѕРј).
+        message: String, //РўРµРєСЃС‚ РєРѕРјРјРµРЅС‚Р°СЂРёСЏ.
+    ): Int {
+<span class="fc" id="L47">        val newComment = Comment(</span>
+<span class="fc" id="L48">            nid = noteId,</span>
+<span class="fc" id="L49">            id = getNextCid(),</span>
+<span class="fc" id="L50">            date = System.currentTimeMillis().toInt(),</span>
+<span class="fc" id="L51">            text = message</span>
+        )
+<span class="fc" id="L53">        comments.add(newComment)</span>
+<span class="fc" id="L54">        return newComment.id</span>
+    }
+
+    //РЈРґР°Р»СЏРµС‚ Р·Р°РјРµС‚РєСѓ С‚РµРєСѓС‰РµРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+    //РџСЂРё СѓРґР°Р»РµРЅРёРё Р·Р°РјРµС‚РєРё РєРѕРјРјРµРЅС‚Р°СЂРёРё Рє РЅРµР№ СѓРґР°Р»СЏСЋС‚СЃСЏ Р±РµР·РІРѕР·РІСЂР°С‚РЅРѕ
+    fun deleteNote(
+        noteId: Int, //Р�РґРµРЅС‚РёС„РёРєР°С‚РѕСЂ Р·Р°РјРµС‚РєРё
+    ): Int {
+<span class="fc bfc" id="L62" title="All 4 branches covered.">        if (notes.removeIf { it.id == noteId }) {</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">            comments.removeAll { it.nid == noteId }</span>
+<span class="fc" id="L64">            return 1</span>
+        } else {
+<span class="fc" id="L66">            throw NoteNotFoundException(&quot;Note with ID $noteId not found&quot;)</span>
+        }
+    }
+
+    //РЈРґР°Р»СЏРµС‚ РєРѕРјРјРµРЅС‚Р°СЂРёР№ (РїРѕ С„Р°РєС‚Сѓ РёР·РјРµРЅСЏРµС‚ Р·РЅР°С‡РµРЅРёРµ С„Р»Р°РіР° deleted
+    fun deleteComment(
+        commentId: Int,
+    ): Int {
+<span class="fc bfc" id="L74" title="All 6 branches covered.">        val comment = comments.find { it.id == commentId }</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        if (comment != null) {</span>
+<span class="fc" id="L76">            comment.deleted = true</span>
+<span class="fc" id="L77">            return 1</span>
+        } else {
+<span class="fc" id="L79">            throw CommentNotFoundException(&quot;Post with ID $commentId not found&quot;)</span>
+        }
+    }
+
+<span class="fc" id="L83">    fun editNote(</span>
+        noteId: Int,
+        title: String, //Р—Р°РіРѕР»РѕРІРѕРє Р·Р°РјРµС‚РєРё
+        text: String, //РўРµРєСЃС‚ Р·Р°РјРµС‚РєРё
+<span class="fc" id="L87">        privacy: Int = 0, //РЈСЂРѕРІРµРЅСЊ РґРѕСЃС‚СѓРїР° Рє Р·Р°РјРµС‚РєРµ Р’РѕР·РјРѕР¶РЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ:</span>
+        // 0 вЂ” РІСЃРµ РїРѕР»СЊР·РѕРІР°С‚РµР»Рё,
+        // 1 вЂ” С‚РѕР»СЊРєРѕ РґСЂСѓР·СЊСЏ,
+        // 2 вЂ” РґСЂСѓР·СЊСЏ Рё РґСЂСѓР·СЊСЏ РґСЂСѓР·РµР№,
+        // 3 вЂ” С‚РѕР»СЊРєРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ.
+<span class="fc" id="L92">        commentPrivacy: Int = 0, //РЈСЂРѕРІРµРЅСЊ РґРѕСЃС‚СѓРїР° Рє РєРѕРјРјРµРЅС‚РёСЂРѕРІР°РЅРёСЋ Р·Р°РјРµС‚РєРё. Р’РѕР·РјРѕР¶РЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ:</span>
+        // 0 вЂ” РІСЃРµ РїРѕР»СЊР·РѕРІР°С‚РµР»Рё,
+        // 1 вЂ” С‚РѕР»СЊРєРѕ РґСЂСѓР·СЊСЏ,
+        // 2 вЂ” РґСЂСѓР·СЊСЏ Рё РґСЂСѓР·СЊСЏ РґСЂСѓР·РµР№,
+        // 3 вЂ” С‚РѕР»СЊРєРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ.
+<span class="fc" id="L97">        privacyView: String = &quot;All&quot;, //РќР°СЃС‚СЂРѕР№РєРё РїСЂРёРІР°С‚РЅРѕСЃС‚Рё РїСЂРѕСЃРјРѕС‚СЂР° Р·Р°РјРµС‚РєРё</span>
+<span class="fc" id="L98">        privacyComment: String = &quot;All&quot;, //РќР°СЃС‚СЂРѕР№РєРё РїСЂРёРІР°С‚РЅРѕСЃС‚Рё РєРѕРјРјРµРЅС‚РёСЂРѕРІР°РЅРёСЏ Р·Р°РјРµС‚РєРё</span>
+    ): Int {
+<span class="fc bfc" id="L100" title="All 2 branches covered.">        val index = notes.indexOfFirst { it.id == noteId }</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">        if (index != -1) {</span>
+<span class="fc" id="L102">            notes[index] = Note(</span>
+<span class="fc" id="L103">                id = noteId,</span>
+<span class="fc" id="L104">                title = title,</span>
+<span class="fc" id="L105">                text = text,</span>
+<span class="fc" id="L106">                date = System.currentTimeMillis().toInt(),</span>
+<span class="fc" id="L107">                privacy = privacy,</span>
+<span class="fc" id="L108">                commentPrivacy = commentPrivacy,</span>
+<span class="fc" id="L109">                privacyView = privacyView,</span>
+<span class="fc" id="L110">                privacyComment = privacyComment</span>
+            )
+<span class="fc" id="L112">            return 1</span>
+        } else {
+<span class="fc" id="L114">            throw NoteNotFoundException(&quot;Note with ID $noteId not found&quot;)</span>
+        }
+    }
+
+    fun editComment(
+        commentId: Int, //Р�РґРµРЅС‚РёС„РёРєР°С‚РѕСЂ Р·Р°РјРµС‚РєРё
+        message: String, //РўРµРєСЃС‚ РєРѕРјРјРµРЅС‚Р°СЂРёСЏ.
+    ): Int {
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        val index = comments.indexOfFirst { it.id == commentId }</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">        if (index != -1) {</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">            if (!comments[index].deleted) {</span>
+<span class="fc" id="L125">                comments[index] = Comment(</span>
+<span class="fc" id="L126">                    nid = comments[index].nid,</span>
+<span class="fc" id="L127">                    id = commentId,</span>
+<span class="fc" id="L128">                    date = System.currentTimeMillis().toInt(),</span>
+<span class="fc" id="L129">                    text = message</span>
+                )
+<span class="fc" id="L131">                return 1</span>
+            } else {
+<span class="fc" id="L133">                throw CommentDeletedException(&quot;Comment with ID $commentId is deleted&quot;)</span>
+            }
+        } else {
+<span class="fc" id="L136">            throw CommentNotFoundException(&quot;Comment with ID $commentId not found&quot;)</span>
+        }
+    }
+
+    fun getNotes(
+        noteIds: Array&lt;Int&gt;,
+        count: Int,//РљРѕР»РёС‡РµСЃС‚РІРѕ Р·Р°РјРµС‚РѕРє, РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РєРѕС‚РѕСЂС‹С… РЅРµРѕР±С…РѕРґРёРјРѕ РїРѕР»СѓС‡РёС‚СЊ.
+    ): Array&lt;Note&gt; {
+<span class="fc" id="L144">        var notesList = emptyArray&lt;Note&gt;()</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">        for (item in noteIds) {</span>
+<span class="fc" id="L146">            notesList += getNoteByID(item)</span>
+        }
+<span class="fc" id="L148">        return notesList</span>
+    }
+
+    fun getNoteByID(
+        noteId: Int
+    ): Note {
+<span class="fc bfc" id="L154" title="All 6 branches covered.">        val note = notes.find { it.id == noteId }</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">        return note ?: throw NoteNotFoundException(&quot;Note with ID $noteId not found&quot;)</span>
+    }
+
+    fun getComments(
+        noteId: Int,
+    ): Array&lt;Comment&gt; {
+<span class="fc" id="L161">        var commentsList = emptyArray&lt;Comment&gt;()</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">        for (item in comments) {</span>
+<span class="pc bpc" id="L163" title="1 of 4 branches missed.">            if (item.nid == noteId &amp;&amp; !item.deleted) commentsList += item</span>
+        }
+<span class="fc" id="L165">        return commentsList</span>
+    }
+
+    //РЈРґР°Р»СЏРµС‚ РєРѕРјРјРµРЅС‚Р°СЂРёР№ (РїРѕ С„Р°РєС‚Сѓ РёР·РјРµРЅСЏРµС‚ Р·РЅР°С‡РµРЅРёРµ С„Р»Р°РіР° deleted
+    fun restoreComment(
+        commentId: Int,
+    ): Int {
+<span class="pc bpc" id="L172" title="2 of 6 branches missed.">        val comment = comments.find { it.id == commentId }</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">        if (comment != null) {</span>
+<span class="fc" id="L174">            comment.deleted = false</span>
+<span class="fc" id="L175">            return 1</span>
+        } else {
+<span class="fc" id="L177">            throw CommentNotFoundException(&quot;Post with ID $commentId not found&quot;)</span>
+        }
+    }
+
+    // Р’СЃРїРѕРјРѕРіР°С‚РµР»СЊРЅР°СЏ С„СѓРЅРєС†РёСЏ РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ СЃР»РµРґСѓСЋС‰РµРіРѕ ID РґР»СЏ РЅРѕРІРѕР№ Р·Р°РјРµС‚РєРё
+    private fun getNextId(): Int {
+<span class="fc bfc" id="L183" title="All 2 branches covered.">        return notes.maxByOrNull { it.id }?.id?.plus(1) ?: 1</span>
+    }
+
+    // Р’СЃРїРѕРјРѕРіР°С‚РµР»СЊРЅР°СЏ С„СѓРЅРєС†РёСЏ РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ СЃР»РµРґСѓСЋС‰РµРіРѕ ID РґР»СЏ РЅРѕРІРѕРіРѕ РєРѕРјРјРµРЅС‚Р°СЂРёСЏ
+    private fun getNextCid(): Int {
+<span class="fc bfc" id="L188" title="All 2 branches covered.">        return comments.maxByOrNull { it.id }?.id?.plus(1) ?: 1</span>
+    }
+
+    //Exceptions
+
+<span class="fc" id="L193">    class NoteNotFoundException(message: String) : RuntimeException(message)</span>
+<span class="fc" id="L194">    class CommentNotFoundException(message: String) : RuntimeException(message)</span>
+<span class="fc" id="L195">    class CommentDeletedException(message: String) : RuntimeException(message)</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

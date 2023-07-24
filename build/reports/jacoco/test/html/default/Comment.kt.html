@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Comment.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PostClass4_4_1</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">Comment.kt</span></div><h1>Comment.kt</h1><pre class="source lang-java linenums"><span class="fc" id="L1">data class Comment(</span>
+<span class="fc" id="L2">    val nid: Int, //    Р�РґРµРЅС‚РёС„РёРєР°С‚РѕСЂ Р·Р°РјРµС‚РєРё, Рє РєРѕС‚РѕСЂРѕР№ РєРѕРјРјРµРЅС‚Р°СЂРёР№</span>
+<span class="fc" id="L3">    val id: Int, // Р�РґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РєРѕРјРјРµРЅС‚Р°СЂРёСЏ</span>
+<span class="pc" id="L4">    val date: Int, //    Р”Р°С‚Р° СЃРѕР·РґР°РЅРёСЏ РєРѕРјРјРµРЅС‚Р°СЂРёСЏ РІ С„РѕСЂРјР°С‚Рµ Unixtime.</span>
+<span class="pc" id="L5">    val text: String, //   РўРµРєСЃС‚ РєРѕРјРјРµРЅС‚Р°СЂРёСЏ.</span>
+<span class="pc" id="L6">    val donut: DonutObjectComment? = null, //Р�РЅС„РѕСЂРјР°С†РёСЏ Рѕ VK Donut.</span>
+<span class="pc" id="L7">    val replyToUser: Int? = null, // Р�РґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РёР»Рё СЃРѕРѕР±С‰РµСЃС‚РІР°, РІ РѕС‚РІРµС‚ РєРѕС‚РѕСЂРѕРјСѓ РѕСЃС‚Р°РІР»РµРЅ С‚РµРєСѓС‰РёР№ РєРѕРјРјРµРЅС‚Р°СЂРёР№ (РµСЃР»Рё РїСЂРёРјРµРЅРёРјРѕ).</span>
+<span class="pc" id="L8">    val replyToComment: Int? = null, //Р�РґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РєРѕРјРјРµРЅС‚Р°СЂРёСЏ, РІ РѕС‚РІРµС‚ РЅР° РєРѕС‚РѕСЂС‹Р№ РѕСЃС‚Р°РІР»РµРЅ С‚РµРєСѓС‰РёР№ (РµСЃР»Рё РїСЂРёРјРµРЅРёРјРѕ).</span>
+<span class="pc" id="L9">    val parentsStack: Array&lt;Int&gt; = emptyArray(), // РњР°СЃСЃРёРІ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂРѕРІ СЂРѕРґРёС‚РµР»СЊСЃРєРёС… РєРѕРјРјРµРЅС‚Р°СЂРёРµРІ.</span>
+<span class="pc" id="L10">    val thread: ThreadObject? = null, // Р�РЅС„РѕСЂРјР°С†РёСЏ Рѕ РІР»РѕР¶РµРЅРЅРѕР№ РІРµС‚РєРµ РєРѕРјРјРµРЅС‚Р°СЂРёРµРІ, РѕР±СЉРµРєС‚ СЃ РїРѕР»СЏРјРё:</span>
+<span class="fc" id="L11">    var deleted: Boolean = false //Р±С‹Р»Р° Р»Рё РєРѕРјРјРµРЅС‚Р°СЂРёР№ СѓРґР°Р»РµРЅ</span>
+<span class="fc" id="L12">)</span>
+
+<span class="nc" id="L14">data class ThreadObject(//Р�РЅС„РѕСЂРјР°С†РёСЏ Рѕ РІР»РѕР¶РµРЅРЅРѕР№ РІРµС‚РєРµ РєРѕРјРјРµРЅС‚Р°СЂРёРµРІ, РѕР±СЉРµРєС‚ СЃ РїРѕР»СЏРјРё</span>
+<span class="nc" id="L15">    val count: Int = 0, // РєРѕР»РёС‡РµСЃС‚РІРѕ РєРѕРјРјРµРЅС‚Р°СЂРёРµРІ РІ РІРµС‚РєРµ</span>
+<span class="nc" id="L16">    val items: Array&lt;Comment&gt; = emptyArray(), //РјР°СЃСЃРёРІ РѕР±СЉРµРєС‚РѕРІ РєРѕРјРјРµРЅС‚Р°СЂРёРµРІ Рє Р·Р°РїРёСЃРё (С‚РѕР»СЊРєРѕ РґР»СЏ РјРµС‚РѕРґР° wall.getComments).</span>
+<span class="nc" id="L17">    val can_post: Boolean = false,//РјРѕР¶РµС‚ Р»Рё С‚РµРєСѓС‰РёР№ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ РѕСЃС‚Р°РІР»СЏС‚СЊ РєРѕРјРјРµРЅС‚Р°СЂРёРё РІ СЌС‚РѕР№ РІРµС‚РєРµ.</span>
+<span class="nc" id="L18">    val show_reply_button: Boolean = false, //РЅСѓР¶РЅРѕ Р»Рё РѕС‚РѕР±СЂР°Р¶Р°С‚СЊ РєРЅРѕРїРєСѓ В«РѕС‚РІРµС‚РёС‚СЊВ» РІ РІРµС‚РєРµ.</span>
+<span class="nc" id="L19">    val groups_can_post: Boolean = false// РјРѕРіСѓС‚ Р»Рё СЃРѕРѕР±С‰РµСЃС‚РІР° РѕСЃС‚Р°РІР»СЏС‚СЊ РєРѕРјРјРµРЅС‚Р°СЂРёРё РІ РІРµС‚РєРµ.</span>
+<span class="nc" id="L20">)</span>
+
+<span class="nc" id="L22">data class DonutObjectComment( //Р�РЅС„РѕСЂРјР°С†РёСЏ Рѕ VK Donut. РћР±СЉРµРєС‚ СЃРѕ СЃР»РµРґСѓСЋС‰РёРјРё РїРѕР»СЏРјРё:</span>
+<span class="nc" id="L23">    val is_don: Boolean = false, //СЏРІР»СЏРµС‚СЃСЏ Р»Рё РєРѕРјРјРµРЅС‚Р°С‚РѕСЂ РїРѕРґРїРёСЃС‡РёРєРѕРј VK Donut.</span>
+<span class="nc" id="L24">    val placeholder: String = &quot;no donut&quot; //Р·Р°РіР»СѓС€РєР° РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№, РєРѕС‚РѕСЂС‹Рµ РЅРµ РѕС„РѕСЂРјРёР»Рё РїРѕРґРїРёСЃРєСѓ VK Donut</span>
+<span class="nc" id="L25">)</span>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

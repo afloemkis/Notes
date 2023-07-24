@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Note.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PostClass4_4_1</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">Note.kt</span></div><h1>Note.kt</h1><pre class="source lang-java linenums">
+//Р—Р°РјРµС‚РєРё
+<span class="fc" id="L3">data class Note (</span>
+<span class="fc" id="L4">    val id: Int, //Р�РґРµРЅС‚РёС„РёРєР°С‚РѕСЂ Р·Р°РјРµС‚РєРё</span>
+<span class="pc" id="L5">    val title: String, //Р—Р°РіРѕР»РѕРІРѕРє Р·Р°РјРµС‚РєРё.</span>
+<span class="pc" id="L6">    val text: String, //РўРµРєСЃС‚ Р·Р°РјРµС‚РєРё.</span>
+<span class="pc" id="L7">    val date: Int, //Р”Р°С‚Р° СЃРѕР·РґР°РЅРёСЏ Р·Р°РјРµС‚РєРё РІ С„РѕСЂРјР°С‚Рµ Unixtime.</span>
+<span class="pc" id="L8">    val comments: Int = 0, //РљРѕР»РёС‡РµСЃС‚РІРѕ РєРѕРјРјРµРЅС‚Р°СЂРёРµРІ.</span>
+<span class="pc" id="L9">    val read_comments: Int = 0, //РљРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРѕС‡РёС‚Р°РЅРЅС‹С… РєРѕРјРјРµРЅС‚Р°СЂРёРµРІ (С‚РѕР»СЊРєРѕ РїСЂРё Р·Р°РїСЂРѕСЃРµ РёРЅС„РѕСЂРјР°С†РёРё Рѕ Р·Р°РјРµС‚РєРµ С‚РµРєСѓС‰РµРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ).</span>
+<span class="pc" id="L10">    val view_url: String = &quot;&quot;, //URL СЃС‚СЂР°РЅРёС†С‹ РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ Р·Р°РјРµС‚РєРё.</span>
+<span class="pc" id="L11">    val privacy: Int = 0, //РЈСЂРѕРІРµРЅСЊ РґРѕСЃС‚СѓРїР° Рє Р·Р°РјРµС‚РєРµ Р’РѕР·РјРѕР¶РЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ:</span>
+    // 0 вЂ” РІСЃРµ РїРѕР»СЊР·РѕРІР°С‚РµР»Рё,
+    // 1 вЂ” С‚РѕР»СЊРєРѕ РґСЂСѓР·СЊСЏ,
+    // 2 вЂ” РґСЂСѓР·СЊСЏ Рё РґСЂСѓР·СЊСЏ РґСЂСѓР·РµР№,
+    // 3 вЂ” С‚РѕР»СЊРєРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ.
+<span class="pc" id="L16">    val commentPrivacy: Int = 0, //РЈСЂРѕРІРµРЅСЊ РґРѕСЃС‚СѓРїР° Рє РєРѕРјРјРµРЅС‚РёСЂРѕРІР°РЅРёСЋ Р·Р°РјРµС‚РєРё. Р’РѕР·РјРѕР¶РЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ:</span>
+    // 0 вЂ” РІСЃРµ РїРѕР»СЊР·РѕРІР°С‚РµР»Рё,
+    // 1 вЂ” С‚РѕР»СЊРєРѕ РґСЂСѓР·СЊСЏ,
+    // 2 вЂ” РґСЂСѓР·СЊСЏ Рё РґСЂСѓР·СЊСЏ РґСЂСѓР·РµР№,
+    // 3 вЂ” С‚РѕР»СЊРєРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ.
+<span class="pc" id="L21">    val privacyView: String = &quot;All&quot;, //РќР°СЃС‚СЂРѕР№РєРё РїСЂРёРІР°С‚РЅРѕСЃС‚Рё РїСЂРѕСЃРјРѕС‚СЂР° Р·Р°РјРµС‚РєРё</span>
+<span class="pc" id="L22">    val privacyComment: String = &quot;All&quot;, //РќР°СЃС‚СЂРѕР№РєРё РїСЂРёРІР°С‚РЅРѕСЃС‚Рё РєРѕРјРјРµРЅС‚РёСЂРѕРІР°РЅРёСЏ Р·Р°РјРµС‚РєРё</span>
+<span class="pc" id="L23">    val can_comment: Boolean = false, //Р•СЃС‚СЊ Р»Рё РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊ РѕСЃС‚Р°РІР»СЏС‚СЊ РєРѕРјРјРµРЅС‚Р°СЂРёРё</span>
+<span class="pc" id="L24">    val text_wiki: String? = null, //РўСЌРіРё СЃСЃС‹Р»РѕРє РЅР° wiki</span>
+<span class="fc" id="L25">)</span>
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

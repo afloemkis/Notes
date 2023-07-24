@@ -5,117 +5,124 @@ import org.junit.Assert.*
 class WallServiceTest {
 
     @Test
-    fun addPost_IdIsNotZero() {
-        val post = Post(
-            id = 0,
-            ownerId = 1,
-            fromId = 1,
-            createdBy = 1,
-            date = 123456789,
-            replyOwnerID = 1,
-            text = "Test post",
-            copyright = CopyrightObject(0, "link", "CR", "type"),
-            likes = LikeObject(count = 0, userLikes = false, canLike = true, canPublish = true),
-            reposts = RepostObject(0, false),
-            views = ViewsObject(0),
-            postType = "Type",
-            attachments = emptyArray(),
-        )
-
-        val addedPost = WallService.add(post)
-
-        assertTrue(addedPost.id != 0)
+    fun addNote_addFirstNote() {
+        val addedNote = NoteService.addNote("Заметка 1", "Текст заметки 1")
+        assertEquals(addedNote, 1)
     }
 
     @Test
-    fun updatePost_ExistingId_ReturnsTrue() {
-        val existingPost = Post(
-            id = 1,
-            ownerId = 1,
-            fromId = 1,
-            createdBy = 1,
-            date = 123456789,
-            replyOwnerID = 1,
-            text = "Existing post",
-            copyright = CopyrightObject(0, "link", "CR", "type"),
-            likes = LikeObject(count = 0, userLikes = false, canLike = true, canPublish = true),
-            reposts = RepostObject(0, false),
-            views = ViewsObject(0),
-            postType = "Type",
-            attachments = emptyArray()
-        )
-        WallService.add(existingPost)
-
-        val updatedPost = existingPost.copy(text = "Updated post")
-        val isUpdated = WallService.update(updatedPost)
-
-        assertTrue(isUpdated)
+    fun createComment_addFirstComment() {
+        val addedNote = NoteService.addNote("Заметка 1", "Текст заметки 1")
+        val createdComment = NoteService.createComment(addedNote, null,"Комментарий 1")
+        assertTrue(createdComment != null)
     }
 
     @Test
-    fun updatePost_NonexistentId_ReturnsFalse() {
-        val nonExistentPost = Post(
-            id = 2,
-            ownerId = 1,
-            fromId = 1,
-            createdBy = 1,
-            date = 123456789,
-            replyOwnerID = 1,
-            text = "Nonexistent post",
-            copyright = CopyrightObject(0, "link", "CR", "type"),
-            likes = LikeObject(0, false, canLike = true, canPublish = true),
-            reposts = RepostObject(0, false),
-            views = ViewsObject(0),
-            postType = "Type",
-            attachments = emptyArray()
-        )
+    fun deleteNote_delete() {
+        val addedNote = NoteService.addNote("Заметка 1", "Текст заметки 1")
+        val result = NoteService.deleteNote(addedNote)
+        assertEquals(result, 1)
+    }
 
-        val isUpdated = WallService.update(nonExistentPost)
-
-        assertFalse(isUpdated)
+    @Test (expected = NoteService.NoteNotFoundException::class)
+    fun deleteNote_throwException() {
+        NoteService.deleteNote(25)
     }
 
     @Test
-    fun addComment_existingPost() {
-        val existingPost = Post(
-            id = 1,
-            ownerId = 1,
-            fromId = 1,
-            createdBy = 1,
-            date = 123456789,
-            replyOwnerID = 1,
-            text = "Existing post",
-            copyright = CopyrightObject(0, "link", "CR", "type"),
-            likes = LikeObject(count = 0, userLikes = false, canLike = true, canPublish = true),
-            reposts = RepostObject(0, false),
-            views = ViewsObject(0),
-            postType = "Type",
-            attachments = emptyArray()
-        )
-        WallService.add(existingPost)
-
-        val comment = Comment(
-            id = 1, //    Идентификатор комментария.
-            fromId = 1, //    Идентификатор автора комментария.
-            date = 12345678, //    Дата создания комментария в формате Unixtime.
-            text = "Первый коммент", //   Текст комментария.
-            replyToUser = 2 // Идентификатор пользователя или сообщества, в ответ которому оставлен текущий комментарий (если применимо).
-        )
-
-        val createdComment = WallService.createComment(1, comment)
-        assertTrue(createdComment.id == 1)
+    fun deleteComment_existingComment() {
+        val addedNote = NoteService.addNote("Заметка 1", "Текст заметки 1")
+        val createdComment = NoteService.createComment(addedNote, null,"Комментарий 1")
+        val result = NoteService.deleteComment(createdComment)
+        assertEquals(result, 1)
     }
 
-    @Test(expected = WallService.PostNotFoundException::class)
-    fun addComment_throwException() {
-        val comment = Comment(
-            id = 6, //    Идентификатор комментария.
-            fromId = 1, //    Идентификатор автора комментария.
-            date = 12345678, //    Дата создания комментария в формате Unixtime.
-            text = "Первый коммент", //   Текст комментария.
-            replyToUser = 2 // Идентификатор пользователя или сообщества, в ответ которому оставлен текущий комментарий (если применимо).
-        )
-        WallService.createComment(1, comment)
-
+    @Test (expected = NoteService.CommentNotFoundException::class)
+    fun deleteComment_ThrowException(){
+        NoteService.deleteComment(9)
     }
+
+    @Test
+    fun editNote_edited() {
+        val addedNote = NoteService.addNote("Заметка 1", "Текст заметки 1")
+        val result = NoteService.editNote(addedNote, "Заметка 1", "Текст заметки 2")
+        assertEquals(result,1)
+    }
+
+    @Test (expected = NoteService.NoteNotFoundException::class)
+    fun editNote_ThrowException(){
+        NoteService.editNote(9,"неважно", "неважно")
+    }
+
+    @Test
+    fun editComment_edited() {
+        val addedNote = NoteService.addNote("Заметка 1", "Текст заметки 1")
+        val createdComment = NoteService.createComment(addedNote, null,"Комментарий 1")
+        val result = NoteService.editComment(createdComment, "Комментарий 2")
+        assertEquals(result,1)
+    }
+
+    @Test (expected = NoteService.CommentNotFoundException::class)
+    fun editComment_ThrowNotFoundException(){
+        NoteService.editComment(9,"неважно")
+    }
+
+    @Test (expected = NoteService.CommentDeletedException::class)
+    fun editComment_ThrowDeletedException() {
+        val addedNote = NoteService.addNote("Заметка 1", "Текст заметки 1")
+        val createdComment = NoteService.createComment(addedNote, null,"Комментарий 1")
+        NoteService.deleteComment(createdComment)
+        val result = NoteService.editComment(createdComment, "неважно")
+    }
+
+    @Test
+    fun testGetNotes() {
+        NoteService.addNote("Заметка 1", "Текст заметки 1")
+        NoteService.addNote("Заметка 2", "Текст заметки 2")
+
+        val noteIds = arrayOf(1, 2)
+        val result = NoteService.getNotes(noteIds, 2)
+        assertEquals(2, result.size)
+    }
+
+    @Test
+    fun testGetNoteByID() {
+        val result = NoteService.addNote("Заметка 1", "Текст заметки 1")
+
+        val retrievedNote = NoteService.getNoteByID(result)
+        assertEquals(result, retrievedNote.id)
+    }
+
+    @Test (expected = NoteService.NoteNotFoundException::class)
+    fun GetNoteByID_ThrowException(){
+        NoteService.getNoteByID(77)
+    }
+
+    @Test
+    fun testGetComments() {
+        val addedNote = NoteService.addNote("Заметка 1", "Текст заметки 1")
+        val comment1 = NoteService.createComment(addedNote, null,"Комментарий 1")
+        val comment2 = NoteService.createComment(addedNote, null,"Комментарий 2")
+        val comment3 = NoteService.createComment(addedNote, null,"Комментарий 3")
+
+        val result = NoteService.getComments(addedNote)
+        assertEquals(3, result.size)
+    }
+
+    @Test
+    fun testRestoreComment() {
+        val addedNote = NoteService.addNote("Заметка 1", "Текст заметки 1")
+        val createdComment = NoteService.createComment(addedNote, null,"Комментарий 1")
+        NoteService.deleteComment(createdComment)
+
+        val result = NoteService.restoreComment(createdComment)
+        assertEquals(result, 1)
+    }
+
+    @Test (expected = NoteService.CommentNotFoundException::class)
+    fun restoreComment_ThrowException(){
+        NoteService.restoreComment(9)
+    }
+
 }
+
